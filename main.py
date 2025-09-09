@@ -1,14 +1,31 @@
 from board import Board
 from unit import Unit
 
-b = Board()
+def test_merging_three():
+    board = Board(rows=2, cols=3)
 
-# Place a new Archer unit for testing
-archer = Unit("Archer", attack=5)
-b.place_unit(0, 0, archer)
+    # Place three Archers
+    board.place_unit(Unit("Archer", attack=5, hp=10), 0, 0)
+    board.place_unit(Unit("Archer", attack=5, hp=10), 0, 1)
+    board.place_unit(Unit("Archer", attack=5, hp=10), 0, 2)
 
-print("Now cell has:", b.grid[0][0].unit)
+    print("=== After placing 3 Archers ===")
+    print(board)
 
-# Merge the unit
-b.grid[0][0].unit.upgrade()
-print("After upgrade:", b.grid[0][0].unit)
+
+def test_merging_four():
+    board = Board(rows=2, cols=3)
+
+    # Place four Archers
+    board.place_unit(Unit("Archer", attack=5, hp=10), 0, 0)
+    board.place_unit(Unit("Archer", attack=5, hp=10), 0, 1)
+    board.place_unit(Unit("Archer", attack=5, hp=10), 0, 2)
+    board.place_unit(Unit("Archer", attack=5, hp=10), 1, 0)
+
+    print("\n=== After placing 4 Archers ===")
+    print(board)
+
+
+if __name__ == "__main__":
+    test_merging_three()
+    test_merging_four()
