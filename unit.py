@@ -1,18 +1,34 @@
+# unit.py
+from cards import CardLibrary
+
 class Unit:
-    def __init__(self, name: str, level: int = 1, attack: int = 1, hp: int = 10):
+    def __init__(self, name: str, star: int = 1):
+        data = CardLibrary.get_card_data(name)
         self.name = name
-        self.level = level
-        self.attack = attack
-        self.hp = hp
+        self.card_level = data["card_level"]
+        self.star = star
+        self.cost = data["cost"]
+        self.traits = list(data["traits"])
+        
+        # Base stats from registry
+        self.base_hp = data["hp"]
+        self.base_dps = data["dps"]
+        self.hit_speed = data["hit_speed"]
+        
+        # Scale stats based on star
+        self.hp = self.base_hp * (2 ** (star - 1))
+        self.dps = self.base_dps * (2 ** (star - 1))
 
     def upgrade(self):
-        """When merging, increase level and double attack + hp."""
-        self.level += 1
-        self.attack *= 2
+        self.star += 1
         self.hp *= 2
+        self.dps *= 2
 
     def __repr__(self):
-        return f"{self.name}(Lv{self.level}, ATK={self.attack}, HP={self.hp})"
+        return (f"{self.name} Lv{self.card_level} ★{self.star} "
+                f"(HP={self.hp}, DPS={self.dps:.1f}, SPD={self.hit_speed}, Traits={self.traits})")
+
+
 
 
 if __name__ == "__main__":
